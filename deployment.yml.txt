@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment # Kubernetes resource kind we are creating
+metadata:
+  name: Python-app-deployment
+spec:
+  selector:
+    matchLabels:
+      app: Python-app
+  replicas: 2 # Number of replicas that will be created for this deployment
+  template:
+    metadata:
+      labels:
+        app: Python-app
+    spec:
+      containers:
+        - name: Python-app
+          image: kedardesh7875/testing-images # Image that will be used to containers in the cluster
+	  tag: latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000 # The port that the container is running on in the cluster
+
+
+---
+apiVersion: v1
+kind: Service 
+metadata: 
+  name: Python-app-k8ssvc
+spec:
+  type: loadbalancer
+  selector:
+    app: Python-app 
+    targetPort: 5000
