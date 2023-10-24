@@ -27,7 +27,10 @@ kind: Service
 metadata: 
   name: Python-app-k8ssvc
 spec:
-  type: loadbalancer
+  type: NodePort
   selector:
-    app: Python-app 
-    targetPort: 5000
+    app: Python-app
+  ports:
+    - nodePort: 30163
+      port: 5000 
+      targetPort: 5000
